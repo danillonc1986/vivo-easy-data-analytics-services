@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.5.0</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<groupId>br.com.zup.vivo.easy</groupId>
+	<artifactId>vivo-easy-data-analytics-services</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>vivo-easy-data-analytics-services</name>
+	<description>Data Analytics Services</description>
+
+	<!--<repositories>
+		<repository>
+			<id>rit-zup-repos-maven-proxy</id>
+			<url>https://zup-repos-546045978864.d.codeartifact.us-east-1.amazonaws.com/maven/maven-proxy/</url>
+		</repository>
+		<repository>
+			<id>rit-zup-internal-legacy</id>
+			<url>https://zup-repos-546045978864.d.codeartifact.us-east-1.amazonaws.com/maven/internal-legacy/</url>
+		</repository>
+	</repositories>
+-->
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.google.cloud</groupId>
+				<artifactId>libraries-bom</artifactId>
+				<version>21.0.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<properties>
+		<java.version>11</java.version>
+		<lombok.version>1.18.20</lombok.version>
+		<lombok.binding.version>0.2.0</lombok.binding.version>
+		<github.openfeign.version>11.5</github.openfeign.version>
+		<mapstruct.version>1.4.2.Final</mapstruct.version>
+		<maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+
+		<!-- Jacoco -->
+		<jacoco.version>0.8.2</jacoco.version>
+
+		<!-- Sonar Configuration -->
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+		<sonar.language>java</sonar.language>
+		<sonar.exclusions>
+			**/config/**/*,
+			**/enumeration/**/*,
+			**/factories/**/*,
+			**/model/**/*,
+			**/entities/**/*,
+			**/parameters/**/*,
+			**/repositories/**/*,
+			**/serializers/**/*,
+			**/mappers/**/*,
+			**/response/**/*,
+			**/services/**/*,
+			**/exception/**/*,
+			**/util/**/*,
+			**/dao/**/*,
+			**/connection/**/*,
+			**/JsonHelper.java,
+			**/soap/**/*,
+			**/entities/**/*
+		</sonar.exclusions>
+
+		<sonar-plugin.version>3.7.0.1746</sonar-plugin.version>
+		<sonar.host.url>http://localhost:9000/</sonar.host.url>
+		<sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+		<sonar.login>admin</sonar.login>
+		<sonar.password>senha123</sonar.password>
+
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-simple</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${mapstruct.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>${mapstruct.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-core</artifactId>
+			<version>${github.openfeign.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-jackson</artifactId>
+			<version>${github.openfeign.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-okhttp</artifactId>
+			<version>${github.openfeign.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-storage</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.google.apis/google-api-services-oauth2 -->
+		<!--<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-oauth2</artifactId>
+			<version>v2-rev157-1.25.0</version>
+		</dependency>-->
+
+
+		<!-- https://mvnrepository.com/artifact/com.google.apis/google-api-services-storage -->
+		<!--<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-storage</artifactId>
+			<version>v1-rev171-1.25.0</version>
+		</dependency>
+-->
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.13</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.google.oauth-client/google-oauth-client-jetty -->
+		<dependency>
+			<groupId>com.google.oauth-client</groupId>
+			<artifactId>google-oauth-client-jetty</artifactId>
+			<version>1.32.1</version>
+		</dependency>
+
+
+
+		<!--Tests-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>vivo-easy-data-analytics-services</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>build-info</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!--Jacoco-->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<configuration>
+					<excludes>
+						<exclude>**/config/**/*</exclude>
+						<exclude>**/enumeration/**/*</exclude>
+						<exclude>**/factories/**/*</exclude>
+						<exclude>**/model/**/*</exclude>
+						<exclude>**/entities/**/*</exclude>
+						<exclude>**/parameters/**/*</exclude>
+						<exclude>**/response/**/*</exclude>
+						<exclude>**/repositories/**/*</exclude>
+						<exclude>**/serializers/**/*</exclude>
+						<exclude>**/mappers/**/*</exclude>
+						<exclude>**/services/**/*</exclude>
+						<exclude>**/exception/**/*</exclude>
+						<exclude>**/util/**/*</exclude>
+						<exclude>**/dao/**/*</exclude>
+						<exclude>**/connection/**/*</exclude>
+						<exclude>**/soap/**/*</exclude>
+						<exclude>**/entities/**/*</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>default-prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${mapstruct.version}</version>
+						</path>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
+						</path>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok-mapstruct-binding</artifactId>
+							<version>${lombok.binding.version}</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
