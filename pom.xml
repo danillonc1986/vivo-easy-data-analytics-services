@@ -81,6 +81,8 @@
 		<sonar.login>admin</sonar.login>
 		<sonar.password>senha123</sonar.password>
 
+		<sonar.projectKey>vivo-easy-data-analytics-services</sonar.projectKey>
+
 	</properties>
 
 	<dependencies>
